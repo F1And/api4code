@@ -149,7 +149,7 @@ def api(method, url, data, headers):
         print ("请求失败 %s" % e)
 ```
 
-####四、业务包调用封装包(common.py)
+四、业务包调用封装包(common.py)
 ```python
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
