@@ -4,10 +4,12 @@
 
 import sys
 import time
+import os
 reload(sys)
 sys.setdefaultencoding('utf8')
 
 TEST_URL = 'http://127.0.0.1:8080'
+OUT_PATH = os.path.dirname(os.path.dirname(__file__))
 
 REPORT_NAME = '测试报告'
 TITLE = '所有数据准备SQL'
@@ -22,11 +24,11 @@ HEADERS = 'headers'
 REPORT = 'report'
 R_NAME = 'reportName'
 
-REPORT_PATH = "../api4code/report/docs/"
-YML_REPORT = "../api4code/report/mkdocs.yml"
+REPORT_PATH = OUT_PATH + "/api4code/report/docs/"
+YML_REPORT = OUT_PATH + "/api4code/report/mkdocs.yml"
 
 
-CASE_PATH = "../api4code/case/"
+CASE_PATH = OUT_PATH + "/api4code/case/"
 
 #测试报告内容
 API_TEST_FAIL = """

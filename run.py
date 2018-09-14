@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
 # 执行包：runscript
 
-import function.func as func
+import function.common as func
 
 ApiTest = func.ApiTest()
 

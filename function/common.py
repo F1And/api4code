@@ -102,29 +102,30 @@ class ApiTest:
         """
         conf.get_config(filename)
         list = eval(conf.get_title_list())
+        try:
+            for i in range(1, len(list)):
+                title = list[i]
+                number = conf.get_data(title, key=cs.NUMBER)
+                name = conf.get_data(title, key=cs.NAME)
+                method = conf.get_data(title, key=cs.METHOD)
+                url = conf.get_data(title, key=cs.URL)
+                data = eval(conf.get_data(title, key=cs.DATA))
+                _data = request.json.dumps(data,ensure_ascii=False,indent=4)
+                headers = eval(conf.get_data(title, key=cs.HEADERS))
+                _headers = request.json.dumps(headers,ensure_ascii=False,indent=4)
+                testUrl = cs.TEST_URL + url
+                actualCode = request.api(method, testUrl, _data, headers)
+                expectCode = conf.get_data(title, key=cs.CODE)
 
-        for i in range(2, len(list)):
-            title = list[i]
-            number = conf.get_data(title, key=cs.NUMBER)
-            name = conf.get_data(title, key=cs.NAME)
-            method = conf.get_data(title, key=cs.METHOD)
-            url = conf.get_data(title, key=cs.URL)
-            data = eval(conf.get_data(title, key=cs.DATA))
-            _data = request.json.dumps(data,ensure_ascii=False,indent=4)
-            headers = eval(conf.get_data(title, key=cs.HEADERS))
-            _headers = request.json.dumps(headers,ensure_ascii=False,indent=4)
-            testUrl = cs.TEST_URL + url
-            actualCode = request.api(method, testUrl, _data, headers)
-            expectCode = conf.get_data(title, key=cs.CODE)
-
-
-            if actualCode != expectCode:
-                logging.info("新增一条接口失败报告")
-                self.write_report(
-                    cs.API_TEST_FAIL % (name, number, method, testUrl, _headers,_data, expectCode, actualCode))
-            else:
-                logging.info("新增一条接口成功报告")
-                self.write_report(cs.API_TEST_SUCCESS % (name, number, method, testUrl, _headers,_data, expectCode, actualCode))
+                if actualCode != expectCode:
+                    logging.info("新增一条接口失败报告")
+                    self.write_report(
+                        cs.API_TEST_FAIL % (name, number, method, testUrl, _headers,_data, expectCode, actualCode))
+                else:
+                    logging.info("新增一条接口成功报告")
+                    self.write_report(cs.API_TEST_SUCCESS % (name, number, method, testUrl, _headers,_data, expectCode, actualCode))
+        except Exception,e:
+            logging.error('执行case失败 %s',e)
 
     def run_test(self, filename):
         """
